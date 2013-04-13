@@ -1,0 +1,16 @@
+#! /usr/bin/env ruby
+
+require File.expand_path("../lib/armor", File.dirname(__FILE__))
+
+if ARGV.empty?
+  abort("Usage: armor [N]    # Where N = number of iterations")
+end
+
+require "benchmark"
+
+t = Benchmark.realtime do
+  ENV["ARMOR_ITER"] = ARGV[0]
+  Armor.digest("password", "EXAMPLE.COMpianist")
+end
+
+puts "Iterations: %d, Time: %.2f" % [ARGV[0], t]

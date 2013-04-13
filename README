@@ -1,0 +1,17 @@
+armor
+====
+
+shield's partner in crime.
+
+Description
+-----------
+
+A PBKDF2 pure ruby implementation.
+
+## Installation
+
+As usual, you can install it using rubygems.
+
+```
+$ gem install armor
+```
