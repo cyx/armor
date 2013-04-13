@@ -59,7 +59,7 @@ $ armor 10000
 Iterations: 10000, Time: 0.24
 
 $ armor 20000
-Iterations: 15000, Time: 0.48
+Iterations: 20000, Time: 0.48
 ```
 
 Installation
