@@ -1,7 +1,18 @@
 Armor
 =====
 
-shield's partner in crime.
+[Shield][shield]'s partner in crime.
+
+[shield]: http://cyx.github.io/shield/
+
+Description
+-----------
+
+Armor is a pure Ruby implementation of [PBKDF2][pbkdf2], a
+password-based key derivation function recommended for the
+protection of electronically-stored data.
+
+[pbkdf2]: http://en.wikipedia.org/wiki/PBKDF2
 
 Basic Use
 ---------
