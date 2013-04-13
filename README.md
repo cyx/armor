@@ -1,4 +1,4 @@
-armor
+Armor
 =====
 
 shield's partner in crime.
