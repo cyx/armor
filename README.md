@@ -65,10 +65,6 @@ Iterations: 15000, Time: 0.48
 Installation
 ------------
 
-A PBKDF2 pure ruby implementation.
-
-## Installation
-
 As usual, you can install it using rubygems.
 
 ```
