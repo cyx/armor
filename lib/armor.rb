@@ -92,7 +92,22 @@ module Armor
     ret
   end
 
-private
+  # Time-attack safe comparison operator.
+  #
+  # @see http://bit.ly/WHHHz1
+  def self.compare(a, b)
+    return false unless a.length == b.length
+
+    cmp = b.bytes.to_a
+    result = 0
+
+    a.bytes.each_with_index do |char, index|
+      result |= char ^ cmp[index]
+    end
+
+    return result == 0
+  end
+
   def self.xor(a, b)
     result = "".encode("ASCII-8BIT")
 

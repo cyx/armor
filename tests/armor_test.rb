@@ -31,3 +31,11 @@ test "equality of identical keys" do
 
   assert_equal a, b
 end
+
+test "constant time compare helper" do
+  assert Armor.compare("monkey", "monkey")
+end
+
+test "xor" do
+  assert_equal "\0\x01\0", Armor.xor("110", "100")
+end
