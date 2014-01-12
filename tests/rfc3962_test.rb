@@ -59,7 +59,7 @@ test "should match the third test case in appendix B of RFC 3962" do
   #    5c 08 eb 61 fd f7 1e 4e 4e c3 cf 6b a1 f5 51 2b
   #    a7 e5 2d db c5 e5 14 2f 70 8a 31 e2 e6 2b 1e 13
 
-  digest = OpenSSL::Digest::Digest.new("sha1")
+  digest = Armor::Digest.new("sha1")
 
   actual = Armor.pbkdf2(digest, "password", "ATHENA.MIT.EDUraeburn", 1200, 16)
 
@@ -69,7 +69,7 @@ test "should match the third test case in appendix B of RFC 3962" do
   expected =  "5c 08 eb 61 fd f7 1e 4e 4e c3 cf 6b a1 f5 51 2b" +
               "a7 e5 2d db c5 e5 14 2f 70 8a 31 e2 e6 2b 1e 13"
 
-  actual = Armor.pbkdf2(digest, "password", "ATHENA.MIT.EDUraeburn", 1200, 32) 
+  actual = Armor.pbkdf2(digest, "password", "ATHENA.MIT.EDUraeburn", 1200, 32)
 
   assert_equal expected.tr(' ', ''), Armor.hex(actual)
 end
