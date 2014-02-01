@@ -1,6 +1,8 @@
 require "openssl"
 
 module Armor
+  Digest = RUBY_VERSION >= "2.1.0" ? OpenSSL::Digest : OpenSSL::Digest::Digest
+
   # Syntactic sugar for the underlying mathematical definition of PBKDF2.
   #
   # This function does not allow passing in of a dkLen (in other words
@@ -17,7 +19,7 @@ module Armor
     iter = ENV["ARMOR_ITER"] || 5000
     hash = ENV["ARMOR_HASH"] || "sha512"
 
-    digest = OpenSSL::Digest::Digest.new(hash)
+    digest = Digest.new(hash)
     length = digest.digest_length
 
     hex(pbkdf2(digest, password, salt, Integer(iter), length))
