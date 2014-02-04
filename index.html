@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Armor by cyx</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Armor</h1>
+        <p>A pure ruby PBKDF2 implementation</p>
+
+        <p class="view"><a href="https://github.com/cyx/armor">View the Project on GitHub <small>cyx/armor</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/cyx/armor/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/cyx/armor/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/cyx/armor">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="armor" class="anchor" href="#armor"><span class="octicon octicon-link"></span></a>Armor</h1>
+
+<p><a href="http://cyx.github.io/shield/">Shield</a>'s partner in crime.</p>
+
+<h2>
+<a name="description" class="anchor" href="#description"><span class="octicon octicon-link"></span></a>Description</h2>
+
+<p>Armor is a pure Ruby implementation of <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>, a
+password-based key derivation function recommended for the
+protection of electronically-stored data.</p>
+
+<h2>
+<a name="basic-use" class="anchor" href="#basic-use"><span class="octicon octicon-link"></span></a>Basic Use</h2>
+
+<p>Simply pass in the password and salt, and you'll get
+the derived key, i.e.</p>
+
+<div class="highlight highlight-ruby"><pre><span class="n">result</span> <span class="o">=</span> <span class="no">Armor</span><span class="o">.</span><span class="n">digest</span><span class="p">(</span><span class="s2">"password1"</span><span class="p">,</span> <span class="s2">"salt"</span><span class="p">)</span>
+
+<span class="c1"># You can now store this in your database, together with your salt.</span>
+<span class="no">User</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">email</span><span class="p">:</span> <span class="s2">"foo@bar.com"</span><span class="p">,</span> <span class="n">crypted_password</span><span class="p">:</span> <span class="n">result</span><span class="p">,</span> <span class="ss">salt</span><span class="p">:</span> <span class="s2">"salt"</span><span class="p">)</span>
+
+<span class="c1"># Or you can do it shield style and compress the password into one</span>
+<span class="c1"># field by utilizing a constant length salt, e.g.</span>
+<span class="n">salt</span> <span class="o">=</span> <span class="no">SecureRandom</span><span class="o">.</span><span class="n">hex</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="c1"># 64 characters</span>
+<span class="n">result</span> <span class="o">=</span> <span class="no">Armor</span><span class="o">.</span><span class="n">digest</span><span class="p">(</span><span class="s2">"password1"</span><span class="p">,</span> <span class="n">salt</span><span class="p">)</span>
+
+<span class="no">User</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">email</span><span class="p">:</span> <span class="s2">"foo@bar.com"</span><span class="p">,</span> <span class="n">crypted_password</span><span class="p">:</span> <span class="n">result</span> <span class="o">+</span> <span class="n">salt</span><span class="p">)</span>
+</pre></div>
+
+<h2>
+<a name="advanced-usage" class="anchor" href="#advanced-usage"><span class="octicon octicon-link"></span></a>Advanced Usage</h2>
+
+<p>Armor comes with some very sane defaults, namely:</p>
+
+<ol>
+<li>
+<p>Number of iterations:</p>
+
+<pre><code>ENV['ARMOR_ITER'] || 5000
+</code></pre>
+</li>
+<li>
+<p>Hashing function to be used:</p>
+
+<pre><code>ENV['ARMOR_HASH'] || 'sha512'
+</code></pre>
+</li>
+</ol><p>This line will run your app in a different configuration:</p>
+
+<pre><code>$ ARMOR_HASH=sha1 ARMOR_ITER=50_000 rackup
+</code></pre>
+
+<h2>
+<a name="measuring-the-target-slowness" class="anchor" href="#measuring-the-target-slowness"><span class="octicon octicon-link"></span></a>Measuring the target slowness</h2>
+
+<p>So the main reason for PBKDF2 is to slow down the hashing function. Normally
+you would measure the desired average time delay that you want, i.e. 50ms.</p>
+
+<p>For this, you can use the command line tool to quickly estimate a good
+iteration value:</p>
+
+<pre><code>$ armor 5000
+Iterations: 5000, Time: 0.12
+
+$ armor 10000
+Iterations: 10000, Time: 0.24
+
+$ armor 20000
+Iterations: 20000, Time: 0.48
+</code></pre>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>As usual, you can install it using rubygems.</p>
+
+<pre><code>$ gem install armor
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/cyx">cyx</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
